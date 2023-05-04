@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+const handleClick = () => {
+  ElMessage.success('自动引入成功')
+}
 </script>
 
 <template>
+  <el-button type="primary" @click="handleClick">按钮</el-button>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
