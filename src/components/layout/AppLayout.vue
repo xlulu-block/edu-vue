@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AppAside from './AppAside.vue'
 import AppHeader from './AppHeader.vue'
-import AppContent from './AppContent.vue'
 </script>
 
 <template>
@@ -9,12 +8,24 @@ import AppContent from './AppContent.vue'
     <el-container>
       <AppAside />
 
-      <el-container>
+      <el-container class="main">
         <AppHeader />
-        <AppContent />
+        <el-main>
+            <el-scrollbar >
+                <RouterView />
+            </el-scrollbar>
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+    .main{
+        height: 100vh;
+        .el-main{
+            padding-right: 0;
+        }
+    }
+    
+</style>
