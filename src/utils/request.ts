@@ -1,5 +1,3 @@
 import axios from 'axios'
-const Request = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL as string,
-})
+const Request = axios.create()
 export default Request
