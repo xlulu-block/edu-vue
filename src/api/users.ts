@@ -1,34 +1,26 @@
 import Request from '@/utils/request'
 import { useTokenStore } from '@/stores/token'
+// 抽取公共部分
+type commonReturn<T = string> = {
+  success: boolean
+  state: number
+  message: string
+  content: T
+}
+
 type LoginData = {
   phone: string
   password: string
   code?: string
 }
-type loginResponse = {
-  success: boolean
-  state: number
-  message: string
-  content: string
-}
+type loginResponse = commonReturn
 
-type userResponse = {
-  success: boolean
-  state: number
-  message: string
-  content: {
-    isUpdatePassword: boolean
-    portrait: string
-    userName: string
-  }
-}
-
-type RToken = {
-  success: boolean
-  state: number
-  message: string
-  content: string
-}
+type userResponse = commonReturn<{
+  isUpdatePassword: boolean
+  portrait: string
+  userName: string
+}>
+type RToken = commonReturn
 // type和interface的区别就是type必须一一对应，而interface可以多一个或者少一个。
 
 // 登录接口
@@ -50,6 +42,8 @@ export const refreshTokenApi = () => {
   isFreshing = true
   PromiseRT = Request.post<RToken>(
     `/front/user/refresh_token?refreshtoken=${useTokenStore().token?.refresh_token}`
-  )
+  ).finally(() => {
+    isFreshing = false
+  })
   return PromiseRT
 }
