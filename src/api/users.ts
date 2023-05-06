@@ -39,6 +39,17 @@ export const loginApi = (data: LoginData) =>
 export const userInfoApi = () => Request.get<userResponse>('/front/user/getInfo')
 
 // 无痛刷新token,query传参,post方式
+// 避免多次刷新token
+let PromiseRT: Promise<any>
+let isFreshing = false
 export const refreshTokenApi = () => {
-  return Request.post<RToken>(`/front/user/refresh_token?refreshtoken=${useTokenStore().token?.refresh_token}`)
+  // 如果已经refreshing了，就不再请求了
+  if (isFreshing) {
+    return PromiseRT
+  }
+  isFreshing = true
+  PromiseRT = Request.post<RToken>(
+    `/front/user/refresh_token?refreshtoken=${useTokenStore().token?.refresh_token}`
+  )
+  return PromiseRT
 }
