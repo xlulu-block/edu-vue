@@ -2,9 +2,10 @@
 import { loginApi } from '@/api/users'
 import type { FormRules, FormInstance } from 'element-plus'
 import { useTokenStore } from '@/stores/token'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
-const router=useRouter()
+const router = useRouter()
+const route = useRoute()
 
 // 避免失去效应式
 const store = useTokenStore()
@@ -42,7 +43,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
         console.log(res.data, '成功')
         store.setToken(res.data.content)
         ElMessage.success('登录成功')
-        router.push('/')
+        router.push((route.query.redirect as string) || '/')
       })
     } else {
       console.log('error submit!', fields)
