@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 interface Token {
   access_token: string
-  refresh_token: string
+  refresh_token: string,
+  expires_token:number
 }
 export const useTokenStore = defineStore('myToken', () => {
   //初始值

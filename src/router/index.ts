@@ -43,7 +43,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useTokenStore()
   if (to.matched.some((r) => r.meta.requiresAuth)) {
-    if (!store.token.access_token) {
+    if (!store.token?.access_token) {
       next({ name: 'login', query: { redirect: to.fullPath } })
       return
     }
